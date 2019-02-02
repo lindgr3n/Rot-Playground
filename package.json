@@ -1,5 +1,5 @@
 {
-  "name": "testing-rot",
+  "name": "rot-playground",
   "version": "1.0.0",
   "description": "Just playing around with rot",
   "main": "index.html",
@@ -14,8 +14,5 @@
     "@babel/core": "7.2.0",
     "parcel-bundler": "^1.6.1"
   },
-  "keywords": [
-    "javascript",
-    "rot"
-  ]
+  "keywords": []
 }

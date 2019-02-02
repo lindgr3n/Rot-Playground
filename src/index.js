@@ -19,7 +19,7 @@ const player = Object.assign(
   wizard
 );
 let d = new Display(o);
-document.body.appendChild(d.getContainer());
+document.getElementById('game').appendChild(d.getContainer());
 
 // Generate map
 for (let j = 0; j < o.height; j++) {
@@ -55,8 +55,8 @@ function update(object) {
 
 var out1 = document.createElement('div');
 var out2 = document.createElement('div');
-document.body.appendChild(out1);
-document.body.appendChild(out2);
+document.getElementById('debug').appendChild(out1);
+document.getElementById('debug').appendChild(out2);
 
 document.body.addEventListener('keydown', function(e) {
   var code = e.keyCode;
@@ -80,11 +80,9 @@ document.body.addEventListener('keydown', function(e) {
   if (code === KEYS.VK_DOWN) {
     dir.y = 1;
   }
-  console.log('OLD', player.x, player.y);
   update(Object.assign({}, player, map[player.y][player.x]));
   player.x += dir.x;
   player.y += dir.y;
-  console.log('NEW', player.x, player.y);
   update(player);
 
   out1.innerHTML = 'Keydown: code is ' + code + ' (' + vk + ')';
