@@ -1,9 +1,9 @@
 import './styles.css';
 
 import { Display, KEYS } from 'rot-js';
-import { hallway, wall } from './tiles.js';
-import * as tileObjects from './objects.js';
-import { wizard } from './players.js';
+import { hallway, wall } from './tiles.json';
+import * as tileObjects from './objects.json';
+import { wizard } from './players.json';
 
 // Setup
 var out1 = document.createElement('div');

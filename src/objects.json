@@ -1,0 +1,15 @@
+{
+  "exit": {
+    "name": "exit",
+    "tag": "E",
+    "color": "red",
+    "types": ["exit"]
+  },
+
+  "tree": {
+    "name": "tree",
+    "tag": "#",
+    "color": "darkgreen",
+    "types": ["breakable"]
+  }
+}

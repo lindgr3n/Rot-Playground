@@ -1,0 +1,15 @@
+{
+  "hallway": {
+    "name": "hallway",
+    "tag": ".",
+    "color": "#666",
+    "types": []
+  },
+
+  "wall": {
+    "name": "wall",
+    "tag": "#",
+    "color": "gray",
+    "types": ["block"]
+  }
+}
