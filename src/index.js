@@ -23,6 +23,7 @@ document.getElementById('game').appendChild(d.getContainer());
 let map = [];
 const objects = [];
 const players = [];
+const inventory = {};
 
 // Add objects
 objects.push(
@@ -135,6 +136,15 @@ function removeDead(object) {
     objects.splice(foundIndex, 1);
   }
 }
+
+function updateInventory() {
+  const inventoryItemsDiv = document.querySelector('.inventory-items');
+  const lis = Object.keys(inventory).map(
+    key => `<li>${key}: ${inventory[key]}</li>`
+  );
+  inventoryItemsDiv.innerHTML = `<ul>${lis.join()}</ul>`;
+}
+
 // Generate map
 function generateMap() {
   for (let j = 0; j < o.height; j++) {
@@ -229,6 +239,12 @@ function interact(player, pos) {
     const loot = object.interact(player);
     if (loot) {
       console.log('Wohoo we got loot: ', loot);
+      if (!inventory[loot.type]) {
+        inventory[loot.type] = 0;
+      }
+      inventory[loot.type] = inventory[loot.type] + loot.amount;
+
+      updateInventory();
     }
   }
 
