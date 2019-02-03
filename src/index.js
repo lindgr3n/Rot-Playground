@@ -3,6 +3,7 @@ import './styles.css';
 import { Display, KEYS } from 'rot-js';
 import { hallway, wall } from './tiles.json';
 import * as tileObjects from './objects.json';
+import { treeInteraction, Tree } from './objects/Tree';
 import { wizard } from './players.json';
 
 // Setup
@@ -26,6 +27,7 @@ const players = [];
 const inventory = {};
 
 // Add objects
+objects.push(Tree({ x: 10, y: 4, loot: { type: 'wood', amount: 3 } }));
 objects.push(
   Object.assign(
     {
@@ -44,20 +46,10 @@ objects.push(
       x: 8,
       y: 7,
       health: 5,
-      loot: { type: 'wood', amount: 3 },
-      interact: function(interactor) {
-        if (interactor.hasOwnProperty('damage')) {
-          this.health = this.health - interactor.damage;
-        }
-        console.log(`Choop! My current health ${this.health}`);
-        // Dead return the loot!
-        if (this.health <= 0) {
-          removeDead(this);
-        }
-
-        return this.loot;
-      }
+      dead: false,
+      loot: { type: 'wood', amount: 3 }
     },
+    { interact: treeInteraction },
     tileObjects.tree
   )
 );
@@ -67,20 +59,9 @@ objects.push(
       x: 8,
       y: 8,
       health: 5,
-      loot: { type: 'wood', amount: 3 },
-      interact: function(interactor) {
-        if (interactor.hasOwnProperty('damage')) {
-          this.health = this.health - interactor.damage;
-        }
-        console.log(`Choop! My current health ${this.health}`);
-        // Dead return the loot!
-        if (this.health <= 0) {
-          removeDead(this);
-        }
-
-        return this.loot;
-      }
+      loot: { type: 'wood', amount: 3 }
     },
+    { interact: treeInteraction },
     tileObjects.tree
   )
 );
@@ -90,20 +71,9 @@ objects.push(
       x: 8,
       y: 9,
       health: 5,
-      loot: { type: 'wood', amount: 1 },
-      interact: function(interactor) {
-        if (interactor.hasOwnProperty('damage')) {
-          this.health = this.health - interactor.damage;
-        }
-        console.log(`Choop! My current health ${this.health}`);
-        // Dead return the loot!
-        if (this.health <= 0) {
-          removeDead(this);
-        }
-
-        return this.loot;
-      }
+      loot: { type: 'wood', amount: 1 }
     },
+    { interact: treeInteraction },
     tileObjects.tree
   )
 );
@@ -135,6 +105,12 @@ function removeDead(object) {
   if (foundIndex > -1) {
     objects.splice(foundIndex, 1);
   }
+}
+
+function removeDeadObjects() {
+  // Get index of the provided object
+  const areDead = objects.filter(o => o.dead);
+  areDead.forEach(removeDead);
 }
 
 function updateInventory() {
@@ -236,15 +212,21 @@ function interact(player, pos) {
 
   if (object.types.find(type => type === 'breakable')) {
     // Break it
-    const loot = object.interact(player);
+    let loot = null;
+    if (object.interact) {
+      loot = object.interact(player);
+    }
+    console.log(loot);
+    if (object.chop) {
+      loot = object.chop(player);
+    }
+
     if (loot) {
       console.log('Wohoo we got loot: ', loot);
       if (!inventory[loot.type]) {
         inventory[loot.type] = 0;
       }
       inventory[loot.type] = inventory[loot.type] + loot.amount;
-
-      updateInventory();
     }
   }
 
@@ -284,6 +266,8 @@ document.body.addEventListener('keydown', function(e) {
 
   // interact
   interact(player, nextPos);
+  removeDeadObjects();
+  updateInventory();
 
   const canMove = canMoveTo(player, nextPos);
   if (!canMove) {
