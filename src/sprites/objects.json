@@ -1,0 +1,18 @@
+{
+  "door": {
+    "name": "door",
+    "tag": "🚪",
+    "color": "red",
+    "types": [
+      "exit"
+    ]
+  },
+  "tree": {
+    "name": "tree",
+    "tag": "🌲",
+    "color": "darkgreen",
+    "types": [
+      "breakable"
+    ]
+  }
+}
