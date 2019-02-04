@@ -2,10 +2,9 @@ import './styles.css';
 
 import { Display, KEYS } from 'rot-js';
 import { hallway, wall } from './tiles.json';
-import * as tileObjects from './objects.json';
-import { treeInteraction, Tree } from './objects/Tree';
-import { Wizard } from "./characters/Wizard";
+import { Tree } from './objects/Tree';
 import { Door } from './objects/Door';
+import { Wizard } from "./characters/Wizard";
 
 // Setup
 var out1 = document.createElement('div');
@@ -28,18 +27,6 @@ const players = [];
 const inventory = {};
 
 // Add objects
-// objects.push(
-//   Object.assign(
-//     {
-//       x: 10,
-//       y: 10,
-//       interact: function(interactor) {
-//         console.log('Wohoo you found the exit!');
-//       }
-//     },
-//     tileObjects.exit
-//     )
-//     );
 objects.push(Door({ x: 10, y: 10 }));
 objects.push(Tree({ x: 10, y: 4, treasure: { type: 'wood', amount: 3 } }));
 objects.push(Tree({ x: 8, y: 7, treasure: { type: 'wood', amount: 3 } }));
@@ -172,29 +159,15 @@ function interact(player, pos) {
   }
 
   if (object.types.find(type => type === 'breakable')) {
-    // Break it
-    // let loot = null;
-    // if (object.interact) {
-    //   loot = object.interact(player);
-    // }
-    // console.log(loot);
-    // if (object.chop) {
-    //   loot = object.chop(player);
-    // }
     player.chop(object);
-    console.log(object)
     const loot = object.loot();
-    console.log('LOOT', loot)
     if (loot) {
-      console.log('Wohoo we got loot: ', loot);
       if (!inventory[loot.type]) {
         inventory[loot.type] = 0;
       }
       inventory[loot.type] = inventory[loot.type] + loot.amount;
     }
   }
-
-  console.log('Time to interact with: ', object);
 }
 
 // Listeners
