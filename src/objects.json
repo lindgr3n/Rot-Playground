@@ -1,6 +1,6 @@
 {
-  "exit": {
-    "name": "exit",
+  "door": {
+    "name": "door",
     "tag": "🚪",
     "color": "red",
     "types": [
