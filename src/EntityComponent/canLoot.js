@@ -1,5 +1,6 @@
-export const canLoot = object => ({
-  loot: () => {
-    return object.treasure
+export const canLoot = character => ({
+  loot: (object) => {
+    console.log('LOOOT', object.lootObject())
+    return object.lootObject()
   }
 })

@@ -160,7 +160,7 @@ function interact(player, pos) {
 
   if (object.types.find(type => type === 'breakable')) {
     player.chop(object);
-    const loot = object.loot();
+    const { loot } = player.loot(object);
     if (loot) {
       if (!inventory[loot.type]) {
         inventory[loot.type] = 0;
