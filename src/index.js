@@ -42,10 +42,10 @@ generateMap();
 // Render map
 update();
 
-function removeDead(object) {
+function removeDead({target}) {
   // Get index of the provided object
   const foundIndex = objects.findIndex(
-    o => o.x === object.x && o.y === object.y
+    o => o.x === target.x && o.y === target.y
   );
 
   // Remove it from the objects list
@@ -57,7 +57,7 @@ function removeDead(object) {
 function removeDeadObjects() {
   // Get index of the provided object
   const areDead = objects.filter(o => o.dead);
-  areDead.forEach(removeDead);
+  areDead.forEach(target => removeDead({target}));
 }
 
 function updateInventory() {
@@ -109,27 +109,27 @@ function update() {
   drawPlayers();
 }
 
-function getTileAt(pos) {
+function getTileAt({pos}) {
   const tileAt = map[pos.y][pos.x];
   return tileAt;
 }
 
-function getObjectAt(pos) {
+function getObjectAt({pos}) {
   const object = objects.find(o => o.x === pos.x && o.y === pos.y);
   return object;
 }
 
-function canMoveTo(player, pos) {
+function canMoveTo({player, pos}) {
   if (!player || !pos) {
     return true;
   }
-  const object = getObjectAt(pos);
+  const object = getObjectAt({pos});
   // If there exist a object we know that interaction made it still exist
   if (object) {
     return false;
   }
 
-  const tile = getTileAt(pos);
+  const tile = getTileAt({pos});
   // No tile exist allow pass
   if (!tile) {
     return true;
@@ -143,24 +143,24 @@ function canMoveTo(player, pos) {
   return true;
 }
 
-function interact(player, pos) {
-  if (!player || !pos) {
+function interact({object, pos}) {
+  if (!object || !pos) {
     return;
   }
-  const object = getObjectAt(pos);
+  const target = getObjectAt({pos});
   // No object exist carry on
-  if (!object) {
+  if (!target) {
     return;
   }
 
-  if (object.types.find(type => type === 'exit')) {
-    // object.interact(player);
-    player.exit(object);
+  if (target.types.find(type => type === 'exit')) {
+    // object.interact(object);
+    object.exit({target});
   }
 
-  if (object.types.find(type => type === 'breakable')) {
-    player.chop(object);
-    const { loot } = player.loot(object);
+  if (target.types.find(type => type === 'breakable')) {
+    object.chop({target});
+    const { loot } = object.loot({target});
     if (loot) {
       if (!inventory[loot.type]) {
         inventory[loot.type] = 0;
@@ -202,11 +202,11 @@ document.body.addEventListener('keydown', function(e) {
   };
 
   // interact
-  interact(player, nextPos);
+  interact({object: player, pos: nextPos});
   removeDeadObjects();
   updateInventory();
 
-  const canMove = canMoveTo(player, nextPos);
+  const canMove = canMoveTo({player, pos: nextPos});
   if (!canMove) {
     return;
   }
