@@ -1,10 +1,10 @@
 import './styles.css';
 
 import { Display, KEYS } from 'rot-js';
-import { hallway, wall } from './tiles.json';
 import { Tree } from './objects/Tree';
 import { Door } from './objects/Door';
 import { Wizard } from "./characters/Wizard";
+import { generateMap } from "./map/mapGenerator";
 
 // Setup
 var out1 = document.createElement('div');
@@ -13,15 +13,14 @@ document.getElementById('debug').appendChild(out1);
 document.getElementById('debug').appendChild(out2);
 
 // Map size
-let o = {
+let config = {
   width: 25,
   height: 15
 };
 
-let d = new Display(o);
+let d = new Display(config);
 document.getElementById('game').appendChild(d.getContainer());
 
-let map = [];
 const objects = [];
 const players = [];
 const inventory = {};
@@ -38,14 +37,15 @@ objects.push(Tree({ x: 8, y: 9, treasure: { type: 'wood', amount: 3 } }));
 players.push(Wizard({name: 'Player 1', x: 1, y: 1}));
 
 // Create the map
-generateMap();
+const map = generateMap(config);
+console.log('MAP', map)
 // Render map
 update();
 
 function removeDead({target}) {
   // Get index of the provided object
   const foundIndex = objects.findIndex(
-    o => o.x === target.x && o.y === target.y
+    object => object.x === target.x && object.y === target.y
   );
 
   // Remove it from the objects list
@@ -56,7 +56,7 @@ function removeDead({target}) {
 
 function removeDeadObjects() {
   // Get index of the provided object
-  const areDead = objects.filter(o => o.dead);
+  const areDead = objects.filter(object => object.dead);
   areDead.forEach(target => removeDead({target}));
 }
 
@@ -68,24 +68,9 @@ function updateInventory() {
   inventoryItemsDiv.innerHTML = `<ul>${lis.join()}</ul>`;
 }
 
-// Generate map
-function generateMap() {
-  for (let j = 0; j < o.height; j++) {
-    var row = [];
-    for (let i = 0; i < o.width; i++) {
-      if (!i || !j || i + 1 === o.width || j + 1 === o.height) {
-        row.push(wall);
-      } else {
-        row.push(hallway);
-      }
-    }
-    map.push(row);
-  }
-}
-
 function drawTiles() {
-  for (let j = 0; j < o.height; j++) {
-    for (let i = 0; i < o.width; i++) {
+  for (let j = 0; j < config.height; j++) {
+    for (let i = 0; i < config.width; i++) {
       var tile = map[j][i];
       d.draw(i, j, tile.tag, tile.color);
     }
@@ -115,7 +100,7 @@ function getTileAt({pos}) {
 }
 
 function getObjectAt({pos}) {
-  const object = objects.find(o => o.x === pos.x && o.y === pos.y);
+  const object = objects.find(object => object.x === pos.x && object.y === pos.y);
   return object;
 }
 
