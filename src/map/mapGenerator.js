@@ -1,7 +1,8 @@
 
 import { hallway, wall } from '../tiles.json';
 // Generate map
-export function generateMap({width, height}) {
+export function generateMap({config}) {
+  const {width, height} = config;
   let map = [];
   for (let j = 0; j < height; j++) {
     var row = [];
