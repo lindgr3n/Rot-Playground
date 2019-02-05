@@ -2,6 +2,7 @@ import * as Renderer from './Renderer'
 import * as Map from './Map'
 import * as Entities from './Entites'
 import * as Listeners from './Listeners'
+import * as Level from './Level'
 import { Wizard } from "./characters/Wizard";
 import { Door } from './objects/Door'
 import { Tree } from './objects/Tree'
@@ -13,6 +14,7 @@ let config = {
 };
 const players = [];
 const inventory = {};
+let level = {}
 
 export function Game() {}
 
@@ -29,9 +31,7 @@ export function init() {
   // 0 index is current player
   players.push(Wizard({name: 'Player 1', x: 1, y: 1}));
 
-  // Create the map
-  const map = Map.generate({config});
-  console.log('MAP', map)
+  level = Level.getLevel({config});
   // Render map
   Renderer.init({config});
   Listeners.init();
@@ -40,7 +40,7 @@ export function init() {
 }
 
 export function update() {
-  const map = Map.getMap();
+  const map = Level.getMap();
   const objects= Entities.getObjects();
   
   Renderer.drawTiles({map});
