@@ -1,4 +1,4 @@
-import { door } from '../objects.json';
+import { door } from '../sprites/objects.json';
 import { hasExit } from "../EntityComponent/hasExit";
 
 export const Door = ({ x, y, ...rest }) => {
