@@ -1,4 +1,5 @@
 import { hallway, wall } from './tiles.json';
+import { Alien } from "./characters/Alien";
 import {Tree} from './objects/Tree'
 import { Door } from "./objects/Door";
 import { getRandomInt } from "./utils";
@@ -22,7 +23,7 @@ class BoardManager {
     
     this.layoutObjectAtRandom({object: 'tree', limit: this.wallLimit})
     this.layoutObjectAtRandom({tag: 'O', limit: this.foodCount})
-    this.layoutObjectAtRandom({tag: 'E', limit: {min: this.enemyCount, max: this.enemyCount}})
+    this.layoutObjectAtRandom({object: 'alien', limit: {min: this.enemyCount, max: this.enemyCount}})
     
     this.gameManager.getEntitiesManager().add(Door({ x: this.columns, y: 1 }));
   }
@@ -68,6 +69,9 @@ class BoardManager {
       switch(object) {
         case 'tree':
           this.gameManager.getEntitiesManager().add(Tree({ x: column, y: row, treasure: { type: 'wood', amount: 3 } }));
+          break;
+        case 'alien':
+          this.gameManager.getEntitiesManager().add(Alien({ x: column, y: row, treasure: { type: 'gold', amount: 10 } }));
           break;
       }
     }

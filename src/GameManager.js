@@ -52,6 +52,8 @@ class GameManager {
   render() {
     const objects = this.entitesManager.getObjects();
     const players = this.players;
+    
+    this.rendererManager.renderInventory({inventory: this.inventory});
     this.rendererManager.drawTiles({ map: this.boardManager.getBoard() })
     this.rendererManager.drawObjects({objects});
     this.rendererManager.drawPlayers({players});
@@ -98,6 +100,16 @@ class GameManager {
   
     if (target.types.find(type => type === 'breakable')) {
       object.chop({target});
+      const { loot } = object.loot({target});
+      if (loot) {
+        if (!this.inventory[loot.type]) {
+          this.inventory[loot.type] = 0;
+        }
+        this.inventory[loot.type] = this.inventory[loot.type] + loot.amount;
+      }
+    }
+    if (target.types.find(type => type === 'enemy')) {
+      object.attack({target});
       const { loot } = object.loot({target});
       if (loot) {
         if (!this.inventory[loot.type]) {

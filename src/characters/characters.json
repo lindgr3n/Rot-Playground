@@ -5,5 +5,12 @@
     "color": "goldenrod",
     "damage": 2,
     "types": []
+  },
+  "alien": {
+    "name": "alien",
+    "tag": "👽",
+    "color": "goldenrod",
+    "damage": 2,
+    "types": ["enemy"]
   }
 }
