@@ -37,6 +37,10 @@ class EntitesManager {
     const areDead = this.objects.filter(object => object.dead);
     areDead.forEach(target => this.removeDead({target}));
   }
+
+  clear() {
+    this.objects = [];
+  }
 }
 
 export default EntitesManager;

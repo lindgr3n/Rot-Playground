@@ -1,8 +1,6 @@
-import EntitesManager from './EntitesManager'
 import { hallway, wall } from './tiles.json';
 import {Tree} from './objects/Tree'
 import { Door } from "./objects/Door";
-import EntitiesManager from './EntitesManager'
 import { getRandomInt } from "./utils";
 
 class BoardManager {
@@ -34,6 +32,7 @@ class BoardManager {
   }
 
   createBoard() {
+    this.board = [];
     for(let row = -1; row < this.rows + 1; row++) {
       let xAxis = [];
       for(let column = -1; column < this.columns + 1; column++) {

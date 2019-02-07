@@ -21,10 +21,15 @@ class GameManager {
     this.inventory = {};
     this.enemiesMoving = false;
     this.playersTurn = true;
+
+    document.addEventListener('exit', () => this.levelLoaded())
   }
 
   init() {
     this.enemies = [];
+    this.players = [];
+    this.entitesManager.clear();
+    
     this.boardManager.setup(this.level);
     this.players.push(Wizard({name: 'Player 1', x: 1, y: this.rows}));
     this.render();
