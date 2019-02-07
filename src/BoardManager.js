@@ -13,18 +13,19 @@ function getRandomInt(min, max) {
 }
 
 class BoardManager {
-  constructor({level, columns, rows, wallLimit, foodCount}) {
+  constructor({columns, rows, wallLimit, foodCount}) {
     this.columns = columns;
     this.rows = rows;
     this.wallLimit = wallLimit || { min: 5, max: 9 }
     this.foodCount = foodCount || { min: 1, max: 9 }
-    this.enemyCount = Math.round(Math.log(level))
-
+    
     this.freeSpace = [];
     this.board = [];
   }
+  
+  setup(level) {
+    this.enemyCount = Math.round(Math.log(level))
 
-  setup() {
     this.createBoard();
     this.layoutObjectAtRandom({tag: '#', limit: this.wallLimit})
     this.layoutObjectAtRandom({tag: 'O', limit: this.foodCount})
@@ -72,5 +73,5 @@ class BoardManager {
 }
 
 const board = new BoardManager({level: 10, columns: 8, rows: 8})
-board.setup();
+board.setup(1);
 board.logBoard();
