@@ -1,5 +1,5 @@
 
-import { wizard } from '../characters.json';
+import { wizard } from './characters.json';
 import { canChop } from "../EntityComponent/canChop";
 import { hasHealth } from "../EntityComponent/hasHealth";
 import { hasPosition } from "../EntityComponent/hasPosition";
