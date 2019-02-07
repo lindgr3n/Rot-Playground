@@ -35,7 +35,7 @@ class EntitesManager {
   removeDeadObjects() {
     // Get index of the provided object
     const areDead = this.objects.filter(object => object.dead);
-    areDead.forEach(target => removeDead({target}));
+    areDead.forEach(target => this.removeDead({target}));
   }
 }
 
