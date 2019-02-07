@@ -33,18 +33,12 @@ class BoardManager {
     this.enemyCount = Math.round(Math.log(level))
 
     this.createBoard();
-
-    // EntitiesManager.add();
-    // EntitiesManager.add(Tree({ x: 8, y: 7, treasure: { type: 'wood', amount: 3 } }));
-    // EntitiesManager.add(Tree({ x: 8, y: 8, treasure: { type: 'wood', amount: 3 } }));
-    // EntitiesManager.add(Tree({ x: 8, y: 9, treasure: { type: 'wood', amount: 3 } }));
     
     this.layoutObjectAtRandom({object: 'tree', limit: this.wallLimit})
     this.layoutObjectAtRandom({tag: 'O', limit: this.foodCount})
     this.layoutObjectAtRandom({tag: 'E', limit: {min: this.enemyCount, max: this.enemyCount}})
     
     EntitiesManager.add(Door({ x: this.columns, y: 1 }));
-    // this.board[1][this.rows] = {tag: 'D'}
   }
 
   getBoard() {
@@ -85,9 +79,6 @@ class BoardManager {
 
     for(let count = 0; count < randomAmount; count++) {
       const {column, row} = this.getRandomFreeSpace();
-      // console.log(column, row);
-      
-      // this.board[column][row] = {tag};
       switch(object) {
         case 'tree':
           EntitiesManager.add(Tree({ x: column, y: row, treasure: { type: 'wood', amount: 3 } }));
@@ -100,9 +91,5 @@ class BoardManager {
     console.log(this.board)
   }
 }
-
-// const board = new BoardManager({level: 10, columns: 8, rows: 8})
-// board.setup(1);
-// board.logBoard();
 
 export default BoardManager;

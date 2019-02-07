@@ -8,7 +8,7 @@ class RendererManager {
     this.out1;
     this.out2;
 
-    this.init({config});
+    this.init();
   }
 
   init() {
