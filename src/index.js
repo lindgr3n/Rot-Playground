@@ -1,6 +1,7 @@
 import './styles.css';
 
-import * as Game from './refactored/Game'
+// import * as Game from './refactored/Game'
+import GameManager from './GameManager'
 
 if (module.hot) {
   module.hot.accept(function () {
@@ -8,4 +9,7 @@ if (module.hot) {
   });
 }
 
-Game.init();
+// Game.init();
+const game = new GameManager();
+game.init();
+
