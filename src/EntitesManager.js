@@ -39,6 +39,6 @@ class EntitesManager {
   }
 }
 
-export default new EntitesManager();
+export default EntitesManager;
 
 

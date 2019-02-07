@@ -6,7 +6,8 @@ import EntitiesManager from './EntitesManager'
 import { getRandomInt } from "./utils";
 
 class BoardManager {
-  constructor({columns, rows, wallLimit, foodCount}) {
+  constructor({columns, rows, wallLimit, foodCount, gameManager}) {
+    this.gameManager = gameManager;
     this.columns = columns;
     this.rows = rows;
     this.wallLimit = wallLimit || { min: 10, max: 20 }
@@ -25,7 +26,7 @@ class BoardManager {
     this.layoutObjectAtRandom({tag: 'O', limit: this.foodCount})
     this.layoutObjectAtRandom({tag: 'E', limit: {min: this.enemyCount, max: this.enemyCount}})
     
-    EntitiesManager.add(Door({ x: this.columns, y: 1 }));
+    this.gameManager.getEntitiesManager().add(Door({ x: this.columns, y: 1 }));
   }
 
   getBoard() {
@@ -67,7 +68,7 @@ class BoardManager {
       const {column, row} = this.getRandomFreeSpace();
       switch(object) {
         case 'tree':
-          EntitiesManager.add(Tree({ x: column, y: row, treasure: { type: 'wood', amount: 3 } }));
+          this.gameManager.getEntitiesManager().add(Tree({ x: column, y: row, treasure: { type: 'wood', amount: 3 } }));
           break;
       }
     }

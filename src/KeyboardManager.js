@@ -1,5 +1,3 @@
-// import * as Game from './Game'
-// import * as Renderer from './Renderer'
 import { KEYS } from 'rot-js';
 
 class KeyboardManager {
@@ -51,7 +49,7 @@ class KeyboardManager {
     
       this.gameManager.update();
     
-      // Renderer.renderDebug({code, vk, player, map: this.gameManager.getMap()});
+      this.gameManager.getRenderManager().renderDebug({code, vk, player, map: this.gameManager.getBoard()});
     });
     
     // document.body.addEventListener('keypress', function(e) {

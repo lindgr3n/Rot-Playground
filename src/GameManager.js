@@ -9,9 +9,11 @@ class GameManager {
     this.columns = 25;
     this.rows = 15;
 
-    this.boardManager = new BoardManager({columns: this.columns, rows: this.rows})
+    this.boardManager = new BoardManager({columns: this.columns, rows: this.rows, gameManager: this})
     this.rendererManager = new RendererManager();
     this.keyboardManager = new KeyboardManager({gameManager: this});
+    this.entitesManager = new EntitesManager();
+
     this.level = 3;
 
     this.enemies = [];
@@ -43,7 +45,7 @@ class GameManager {
   }
   
   render() {
-    const objects = EntitesManager.getObjects();
+    const objects = this.entitesManager.getObjects();
     const players = this.players;
     this.rendererManager.drawTiles({ map: this.boardManager.getBoard() })
     this.rendererManager.drawObjects({objects});
@@ -71,7 +73,7 @@ class GameManager {
 
   collision({pos}) {
     this.interact({object: this.getPlayer(), pos});
-    EntitesManager.removeDeadObjects();
+    this.entitesManager.removeDeadObjects();
     this.update();
   }
 
@@ -79,7 +81,7 @@ class GameManager {
     if (!object || !pos) {
       return;
     }
-    const target = EntitesManager.getObjectAt({pos});
+    const target = this.entitesManager.getObjectAt({pos});
     // No object exist carry on
     if (!target) {
       return;
@@ -105,7 +107,7 @@ class GameManager {
     if (!player || !pos) {
       return true;
     }
-    const object = EntitesManager.getObjectAt({pos});
+    const object = this.entitesManager.getObjectAt({pos});
     // If there exist a object we know that interaction made it still exist
     if (object) {
       return false;
@@ -123,6 +125,18 @@ class GameManager {
     }
   
     return true;
+  }
+
+  getRenderManager() {
+    return this.rendererManager;
+  }
+
+  getEntitiesManager() {
+    return this.entitesManager;
+  }
+
+  getBoard() {
+    return this.boardManager.getBoard();
   }
 }
 
