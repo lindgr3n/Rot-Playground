@@ -3,26 +3,13 @@ import { hallway, wall } from './tiles.json';
 import {Tree} from './objects/Tree'
 import { Door } from "./objects/Door";
 import EntitiesManager from './EntitesManager'
-
-/**
- * This example returns a random integer between the specified values. 
- * The value is no lower than min (or the next integer greater than min if min isn't an integer), 
- * and is less than (but not equal to) max.
- * 
- * @param {*} min 
- * @param {*} max 
- */
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
+import { getRandomInt } from "./utils";
 
 class BoardManager {
   constructor({columns, rows, wallLimit, foodCount}) {
     this.columns = columns;
     this.rows = rows;
-    this.wallLimit = wallLimit || { min: 5, max: 9 }
+    this.wallLimit = wallLimit || { min: 10, max: 20 }
     this.foodCount = foodCount || { min: 1, max: 9 }
     
     this.freeSpace = [];
@@ -53,7 +40,6 @@ class BoardManager {
           xAxis.push(wall)
         } else {
           xAxis.push(hallway)
-          console.log(column, row)
         }
       }
       this.board.push(xAxis)
@@ -85,6 +71,11 @@ class BoardManager {
           break;
       }
     }
+  }
+  
+  getTileAt({pos}) {
+    const tileAt = this.board[pos.y][pos.x];
+    return tileAt;
   }
 
   logBoard() {
