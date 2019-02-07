@@ -1,5 +1,5 @@
 
-import { generateMap } from "./map/mapGenerator";
+import { generateMap } from "../map/mapGenerator";
 
 let map = [];
 

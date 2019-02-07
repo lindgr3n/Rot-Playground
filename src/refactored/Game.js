@@ -3,9 +3,9 @@ import * as Map from './Map'
 import * as Entities from './Entites'
 import * as Listeners from './Listeners'
 import * as Level from './Level'
-import { Wizard } from "./characters/Wizard";
-import { Door } from './objects/Door'
-import { Tree } from './objects/Tree'
+import { Wizard } from "../characters/Wizard";
+import { Door } from '../objects/Door'
+import { Tree } from '../objects/Tree'
 
 // Map size
 let config = {
