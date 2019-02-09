@@ -29,6 +29,11 @@ class RendererManager {
     inventoryItemsDiv.innerHTML = `<ul>${lis.join()}</ul>`;
   }
 
+  renderGameInfo({level}) {
+    const levelElement = document.querySelector('.game .level')
+    levelElement.innerHTML = level;
+  }
+
   drawTiles({map}) {
     const height = map.length;    
     for (let j = 0; j < height; j++) {

@@ -54,6 +54,7 @@ class GameManager {
     const players = this.players;
     
     this.rendererManager.renderInventory({inventory: this.inventory});
+    this.rendererManager.renderGameInfo({level: this.level});
     this.rendererManager.drawTiles({ map: this.boardManager.getBoard() })
     this.rendererManager.drawObjects({objects});
     this.rendererManager.drawPlayers({players});
