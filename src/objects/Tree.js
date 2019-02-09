@@ -1,4 +1,4 @@
-import { tree } from '../objects.json';
+import { tree } from '../sprites/objects.json';
 import { canDie } from "../EntityComponent/canDie";
 import { hasLoot } from "../EntityComponent/hasLoot";
 import { hasHealth } from "../EntityComponent/hasHealth";
